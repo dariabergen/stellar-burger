@@ -1,10 +1,33 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
+import { Preloader } from '../ui/preloader';
+import { IngredientDetailsUI } from '../ui/ingredient-details';
+import { useSelector } from 'react-redux';
+import {
+  getIngredientsList,
+  getIngredientsState
+} from '../../services/slices/Ingredients';
+import { useParams } from 'react-router-dom';
+import { useDispatch } from '../../services/store';
 
-export const IngredientDetails: FC = () =>
-  // if (!ingredientData) {
-  //   return <Preloader />;
-  // }
+export const IngredientDetails: FC = () => {
+  const dispatch = useDispatch();
+  const { ingredients } = useSelector(getIngredientsState);
 
-  // return <IngredientDetailsUI ingredientData={ingredientData} />;
+  useEffect(() => {
+    if (ingredients.length === 0) {
+      dispatch(getIngredientsList());
+    }
+  }, []);
 
-  null;
+  const { id } = useParams<{ id: string }>();
+
+  const ingredientData = ingredients.find(
+    (ingredient) => ingredient._id === id
+  );
+
+  if (!ingredientData) {
+    return <Preloader />;
+  }
+
+  return <IngredientDetailsUI ingredientData={ingredientData} />;
+};
