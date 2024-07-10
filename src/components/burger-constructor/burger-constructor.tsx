@@ -16,6 +16,7 @@ import { isAuthCheckedSelector } from '../../services/slices/user';
 import { useNavigate } from 'react-router-dom';
 
 export const BurgerConstructor: FC = () => {
+  /** TODO: взять переменные constructorItems, orderRequest и orderModalData из стора */
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const constructorItems = useSelector(constructorSelector.selectItems);
