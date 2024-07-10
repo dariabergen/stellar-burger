@@ -1,25 +1,27 @@
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+
+import { TUser } from '@utils-types';
 import {
   registerUserApi,
   loginUserApi,
   getUserApi,
   updateUserApi,
   logoutApi
-} from '@api';
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { TUser } from '@utils-types';
+} from '../../utils/burger-api';
 
-export const apiGetUser = createAsyncThunk('user/getuser', getUserApi);
-export const updateUser = createAsyncThunk('user/update', updateUserApi);
 export const register = createAsyncThunk('user/register', registerUserApi);
 export const login = createAsyncThunk('user/login', loginUserApi);
+export const apiGetUser = createAsyncThunk('user/getuser', getUserApi);
+export const updateUser = createAsyncThunk('user/update', updateUserApi);
 export const logout = createAsyncThunk('user/logout', logoutApi);
+
 export interface TUserState {
   isAuthChecked: boolean;
   user: TUser;
   error: string | undefined;
 }
 
-const initialState: TUserState = {
+export const initialState: TUserState = {
   isAuthChecked: false,
   user: {
     email: '',
